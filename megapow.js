@@ -12,7 +12,7 @@
       var j4 = document.createElement("link");
            j4.rel = "stylesheet";
            //j4.href = "https://assets.superpowerups.com/megapow-vendors.css";
-           j4.href = "https://import.cdn.thinkific.com/164072/courses/1796258/megapowvendors-220813-111042.css";
+           j4.href = "https://assets.superpowerups.com/megapow-vendors.css";
            f.parentNode.insertBefore(j4, f);
       
 
@@ -20,7 +20,7 @@
            j3.rel = "stylesheet";
            //j3.href = "https://assets.superpowerups.com/megapow-ho.min.css";
         //    j3.href ="https://import.cdn.thinkific.com/164072/courses/1796258/megapowhomin-220813-111042.css";
-            j3.href ="https://assets-robgalvinco.netlify.app/meganav/megapow-ho.min.css";
+            j3.href ="https://assets.superpowerups.com/megapow-ho.min.css";
            
         f.parentNode.insertBefore(j3, f);
    } 
