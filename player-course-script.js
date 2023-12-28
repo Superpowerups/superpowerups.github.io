@@ -24,7 +24,13 @@ $(document).ready(function() {
         return; 
     }    
     let did_load = false;
+    let scriptsLoaded = [];
+    let injectedScripts = [];
 
+    let domLoaded = function () {
+        const event = new Event('DOMContentLoaded');
+        document.dispatchEvent(event);
+      }
 
       function injectScripts(courseID) {
         console.log("Looking for scripts "+courseID);
@@ -39,6 +45,7 @@ $(document).ready(function() {
             const script = document.createElement('script');
             script.src = course.script_src;
             document.body.appendChild(script);
+            injectedScripts.push(script); 
           } else if (extension === 'css') {  
             const link = document.createElement('link');
             link.href = course.script_src;
@@ -59,7 +66,16 @@ $(document).ready(function() {
             // but only load script once
             console.log(data)
             if(!did_load){
-                injectScripts(data.course.id)
+                injectScripts(data.course.id);
+                // Listen for load event on each script
+                injectedScripts.forEach(script => {
+                    script.addEventListener('load', () => {
+                    scriptsLoaded.push(script);
+                    if (scriptsLoaded.length === injectedScripts.length) {
+                        domLoaded();
+                    }
+                    });
+                });                
             }
             did_load = true;
         });
