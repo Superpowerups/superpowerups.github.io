@@ -2,15 +2,15 @@
 <script>
 const course_scripts = [
     {
-      course_name: "abc",
+      course_id: "12345678",
       script_src: "https://www.domain.com/abc.js"
     },
     {
-      course_name: "abc",
+      course_id: "12345678",
       script_src: "https://www.domain.com/style.css"
     },    
     {
-      course_name: "xyz", 
+      course_id: "98765432", 
       script_src: "https://www.domain.com/xyz.js"
     }
   ];
@@ -26,9 +26,9 @@ $(document).ready(function() {
     let did_load = false;
 
 
-      function injectScripts(courseName) {
-        console.log("Looking for scripts "+courseName);
-        const matches = course_scripts.filter(c => c.course_name === courseName);
+      function injectScripts(courseID) {
+        console.log("Looking for scripts "+courseID);
+        const matches = course_scripts.filter(c => c.course_id === courseID);
       
         matches.forEach(course => {
             
@@ -59,7 +59,7 @@ $(document).ready(function() {
             // but only load script once
             console.log(data)
             if(!did_load){
-                injectScripts(data.course.name)
+                injectScripts(data.course.id)
             }
             did_load = true;
         });
