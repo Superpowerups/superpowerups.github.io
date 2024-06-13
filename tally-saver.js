@@ -98,7 +98,7 @@ $(document).ready(function() {
         }
         var cancelButton = '.edit_stripe_support_subscription .button';
         // Create a new button element (sibling)
-        var newButton = $('<button type="button " class="button button-primary kapow-cancel-sub">Cancel Subscription</button>'); // Assign a custom class
+        var newButton = $('<button type="button " class="button button-primary kapow-cancel-sub">'+$(cancelButton).val()+'</button>'); // Assign a custom class
 
         // Insert the new button after the specific element with the href
         $(cancelButton).after(newButton);
