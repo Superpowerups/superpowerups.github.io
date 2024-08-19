@@ -56,6 +56,7 @@ export class CopyCodeButton extends LitElement {
         navigator.clipboard.writeText(range.toString());
       } catch (error) {
         console.error(error);
+        document.execCommand('copy');
       }
     }
     window.getSelection().removeAllRanges();
