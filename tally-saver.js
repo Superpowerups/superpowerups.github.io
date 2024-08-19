@@ -1,3 +1,4 @@
+/* Tally Subscription Saver */
 $(document).ready(function() {
     if(_kapow_ss && _kapow_ss.tallyId){
         let tally_onOpen = () => {
