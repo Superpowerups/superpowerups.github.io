@@ -47,6 +47,7 @@ p {
 
 pre {
   font-size: var(--step--1);
+  padding: 20px;
 }
 
 p, li {
