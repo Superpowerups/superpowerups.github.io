@@ -52,3 +52,5 @@ pre {
 p, li {
   max-width: 70ch;
 }
+
+copy-code-button {display:none;}
