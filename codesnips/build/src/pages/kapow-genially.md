@@ -4,6 +4,6 @@ layout: '../layouts/Base.astro'
 
 ```html
 <script 
-src="https://cdn.jsdelivr.net/gh/robgalvinco/kapow@latest/js/kapow-genially.min.js">
+src="https://cdn.jsdelivr.net/gh/robgalvinco/kapow@latest/js/kapow-genially.js">
 </script>
 ```
