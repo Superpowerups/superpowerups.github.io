@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Permissions-Policy" content="clipboard-read=(), clipboard-write=()">
+  <link rel="stylesheet" href="/codesnips/assets/kapow-genially-clickcc.3fdaffdd.css" /></head>
+
+  <body>
+    <main>
+      <pre is:raw="" class="astro-code" style="background-color: #0d1117; overflow-x: auto;"><code><span class="line"><span style="color: #C9D1D9">&#x3C;</span><span style="color: #7EE787">script</span><span style="color: #C9D1D9">></span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #8B949E">// This will hide the C&#x26;C button for any Multimedia Lesson that </span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #8B949E">// has 'Quiz' in the name</span></span>
+<span class="line"><span style="color: #D2A8FF">$</span><span style="color: #C9D1D9">(document).</span><span style="color: #D2A8FF">ready</span><span style="color: #C9D1D9">(</span><span style="color: #FF7B72">function</span><span style="color: #C9D1D9">(){</span></span>
+<span class="line"><span style="color: #C9D1D9">    </span><span style="color: #FF7B72">if</span><span style="color: #C9D1D9">(</span><span style="color: #FF7B72">typeof</span><span style="color: #C9D1D9">(CoursePlayerV2) </span><span style="color: #FF7B72">!==</span><span style="color: #C9D1D9"> </span><span style="color: #A5D6FF">'undefined'</span><span style="color: #C9D1D9">) {</span></span>
+<span class="line"><span style="color: #C9D1D9">      CoursePlayerV2.</span><span style="color: #D2A8FF">on</span><span style="color: #C9D1D9">(</span><span style="color: #A5D6FF">'hooks:contentDidChange'</span><span style="color: #C9D1D9">, </span><span style="color: #FF7B72">function</span><span style="color: #C9D1D9">(</span><span style="color: #FFA657">data</span><span style="color: #C9D1D9">) {</span></span>
+<span class="line"><span style="color: #C9D1D9">            </span><span style="color: #8B949E">// hide C&#x26;C button when multimedia and lesson name contains Quiz</span></span>
+<span class="line"><span style="color: #C9D1D9">            </span><span style="color: #FF7B72">if</span><span style="color: #C9D1D9"> (data.lesson.contentable_type </span><span style="color: #FF7B72">==</span><span style="color: #C9D1D9"> </span><span style="color: #A5D6FF">"Iframe"</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">&#x26;&#x26;</span><span style="color: #C9D1D9"> data.lesson.name.</span><span style="color: #D2A8FF">indexOf</span><span style="color: #C9D1D9">(</span><span style="color: #A5D6FF">"Quiz"</span><span style="color: #C9D1D9">) </span><span style="color: #FF7B72">!==</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">-</span><span style="color: #79C0FF">1</span><span style="color: #C9D1D9">) {</span></span>
+<span class="line"><span style="color: #C9D1D9">                </span><span style="color: #D2A8FF">$</span><span style="color: #C9D1D9">(</span><span style="color: #A5D6FF">'#course-player-footer button'</span><span style="color: #C9D1D9">).</span><span style="color: #D2A8FF">hide</span><span style="color: #C9D1D9">();</span></span>
+<span class="line"><span style="color: #C9D1D9">            } </span><span style="color: #FF7B72">else</span><span style="color: #C9D1D9"> {</span></span>
+<span class="line"><span style="color: #C9D1D9">                </span><span style="color: #D2A8FF">$</span><span style="color: #C9D1D9">(</span><span style="color: #A5D6FF">'#course-player-footer button'</span><span style="color: #C9D1D9">).</span><span style="color: #D2A8FF">show</span><span style="color: #C9D1D9">();</span></span>
+<span class="line"><span style="color: #C9D1D9">            }            </span></span>
+<span class="line"><span style="color: #C9D1D9">      });</span></span>
+<span class="line"><span style="color: #C9D1D9">    }    </span></span>
+<span class="line"><span style="color: #C9D1D9">})    </span></span>
+<span class="line"><span style="color: #C9D1D9">&#x3C;/</span><span style="color: #7EE787">script</span><span style="color: #C9D1D9">></span></span></code></pre>
+    </main>
+  </body></html>
