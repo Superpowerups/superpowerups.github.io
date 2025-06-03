@@ -86,7 +86,28 @@ $( document ).ready(function() {
                
                $("#content-inner").scrollTop(0);
             });
-            
+            // Check for ?time= query parameter and jump to that time
+            var urlParams = new URLSearchParams(window.location.search);
+            var timeParam = urlParams.get('time');
+            if(timeParam) {
+                var seconds = parseInt(timeParam);
+                console.log("Found time parameter:", seconds);
+                
+                if($("#content-inner iframe").length==0){
+                    // wistia
+                    if(w_video != null){
+                        w_video.time(seconds);
+                    }
+                } else {
+                    // proxy
+                    var current_src = $("#content-inner iframe").attr("src");
+                    var new_src = current_src.replace("time=","timereplaced=") + "&time=" + seconds;
+                    $("#content-inner iframe").attr("src",new_src);
+                }
+                
+                $("#content-inner").scrollTop(0);
+            }
+
             
         }, 500)        
         
