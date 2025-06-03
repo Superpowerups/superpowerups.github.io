@@ -101,7 +101,7 @@ $( document ).ready(function() {
                 } else {
                     // proxy
                     var current_src = $("#content-inner iframe").attr("src");
-                    var new_src = current_src.replace("time=","timereplaced=") + "&time=" + seconds;
+                    var new_src = current_src.replace("crosstime=","crosstimereplaced=").replace("time=","timereplaced=") + "&time=" + seconds;
                     $("#content-inner iframe").attr("src",new_src);
                 }
                 
