@@ -112,31 +112,31 @@ class CCOSCoursePlayerManager {
             const { type, data } = event.data;
 
             switch (type) {
-                case 'kapow_lp_hide_cc':
+                case 'ccos_cpm_hide_cc':
                     this.hideCompleteButton();
                     break;
-                case 'kapow_lp_show_cc':
+                case 'ccos_cpm_show_cc':
                     this.showCompleteButton();
                     break;
-                case 'kapow_lp_click_cc':
+                case 'ccos_cpm_click_cc':
                     this.clickCompleteButton();
                     break;
-                case 'kapow_lp_show_toast':
+                case 'ccos_cpm_show_toast':
                     this.showToast(data);
                     break;
-                case 'kapow_lp_show_video_overlay':
+                case 'ccos_cpm_show_video_overlay':
                     this.showVideoOverlay(data);
                     break;
-                case 'kapow_lp_add_to_drawer':
+                case 'ccos_cpm_add_to_drawer':
                     this.addToDrawer(data);
                     break;
-                case 'kapow_lp_confetti':
+                case 'ccos_cpm_confetti':
                     this.triggerConfetti(data);
                     break;
-                case 'kapow_lp_show_cta':
+                case 'ccos_cpm_show_cta':
                     this.showCTA(data);
                     break;
-                case 'kapow_lp_navigate_link':
+                case 'ccos_cpm_navigate_link':
                     this.navigateLink(data);
                     break;
                 default:
@@ -2008,7 +2008,7 @@ window.LessonPageEvents = {
     hideCompleteButton() {
         if (window.parent !== window) {
             window.parent.postMessage({
-                type: 'kapow_lp_hide_cc'
+                type: 'ccos_cpm_hide_cc'
             }, '*');
         }
     },
@@ -2016,7 +2016,7 @@ window.LessonPageEvents = {
     showCompleteButton() {
         if (window.parent !== window) {
             window.parent.postMessage({
-                type: 'kapow_lp_show_cc'
+                type: 'ccos_cpm_show_cc'
             }, '*');
         }
     },
@@ -2024,7 +2024,7 @@ window.LessonPageEvents = {
     clickCompleteButton() {
         if (window.parent !== window) {
             window.parent.postMessage({
-                type: 'kapow_lp_click_cc'
+                type: 'ccos_cpm_click_cc'
             }, '*');
         }
     },
@@ -2032,7 +2032,7 @@ window.LessonPageEvents = {
     showToast(message, options = {}) {
         if (window.parent !== window) {
             window.parent.postMessage({
-                type: 'kapow_lp_show_toast',
+                type: 'ccos_cpm_show_toast',
                 data: { message, ...options }
             }, '*');
         }
@@ -2041,7 +2041,7 @@ window.LessonPageEvents = {
     showVideoOverlay(videoUrl, options = {}) {
         if (window.parent !== window) {
             window.parent.postMessage({
-                type: 'kapow_lp_show_video_overlay',
+                type: 'ccos_cpm_show_video_overlay',
                 data: { videoUrl, ...options }
             }, '*');
         }
@@ -2050,7 +2050,7 @@ window.LessonPageEvents = {
     addToDrawer(drawerId, itemId, content, options = {}) {
         if (window.parent !== window) {
             window.parent.postMessage({
-                type: 'kapow_lp_add_to_drawer',
+                type: 'ccos_cpm_add_to_drawer',
                 data: { drawerId, itemId, content, ...options }
             }, '*');
         }
@@ -2059,7 +2059,7 @@ window.LessonPageEvents = {
     triggerConfetti(options = {}) {
         if (window.parent !== window) {
             window.parent.postMessage({
-                type: 'kapow_lp_confetti',
+                type: 'ccos_cpm_confetti',
                 data: options
             }, '*');
         }
@@ -2068,7 +2068,7 @@ window.LessonPageEvents = {
     showCTA(options = {}) {
         if (window.parent !== window) {
             window.parent.postMessage({
-                type: 'kapow_lp_show_cta',
+                type: 'ccos_cpm_show_cta',
                 data: options
             }, '*');
         }
@@ -2077,7 +2077,7 @@ window.LessonPageEvents = {
     navigateLink(options = {}) {
         if (window.parent !== window) {
             window.parent.postMessage({
-                type: 'kapow_lp_navigate_link',
+                type: 'ccos_cpm_navigate_link',
                 data: options
             }, '*');
         }
