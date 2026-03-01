@@ -30,6 +30,7 @@ class CCOSCoursePlayerManager {
     init() {
         $(document).ready(() => {
             if (typeof (CoursePlayerV2) !== 'undefined') {
+                this.injectFocusStyles();
                 this.setupCoursePlayerHooks();
                 this.setupEventListeners();
                 this.isInitialized = true;
@@ -46,6 +47,7 @@ class CCOSCoursePlayerManager {
             console.log('Content will change:', data);
             this.clearLessonTimer();
             this.showCompleteButton();
+            this.showContentHeader();
         });
 
         // Handle content did change
@@ -118,6 +120,24 @@ class CCOSCoursePlayerManager {
                 case 'ccos_cpm_show_cc':
                     this.showCompleteButton();
                     break;
+                case 'ccos_cpm_hide_lesson_header':
+                    this.hideContentHeader();
+                    break;
+                case 'ccos_cpm_show_lesson_header':
+                    this.showContentHeader();
+                    break;
+                case 'ccos_cpm_remove_padding':
+                    this.removeMainPadding();
+                    break;
+                case 'ccos_cpm_restore_padding':
+                    this.restoreMainPadding();
+                    break;
+                case 'ccos_cpm_focus_mode_enable':
+                    this.enableFocusMode();
+                    break;
+                case 'ccos_cpm_focus_mode_disable':
+                    this.disableFocusMode();
+                    break;
                 case 'ccos_cpm_click_cc':
                     this.clickCompleteButton();
                     break;
@@ -145,45 +165,94 @@ class CCOSCoursePlayerManager {
         }
     }
 
-    hideCompleteButton() {
-        const footer = document.getElementById('course-player-footer');
-        // Select the parent grid container using the class from your screenshot
-        const gridContainer = footer.parentElement;
+    injectFocusStyles() {
+        const STYLE_ID = 'ccos-player-focus-styles';
+        if (document.getElementById(STYLE_ID)) return;
 
-        if (footer) {
-            footer.style.display = 'none';
-
-            if (gridContainer) {
-                // Remove the 64px reserved row and the second grid area
-                gridContainer.style.gridTemplateRows = '1fr';
-                gridContainer.style.gridTemplateAreas = '"content-inner"';
+        const style = document.createElement('style');
+        style.id = STYLE_ID;
+        style.innerHTML = `
+            /* Footer Hiding Logic */
+            body.ccos-hide-footer .content-modal {
+                grid-template-rows: 1fr !important;
+                grid-template-areas: "content-inner" !important;
+            }
+            body.ccos-hide-footer #course-player-footer {
+                display: none !important;
             }
 
-            console.log('Footer hidden and grid collapsed');
-        } else {
-            console.warn('Course player footer not found');
-        }
+            /* Header Hiding Logic */
+            body.ccos-hide-header .content-surface {
+                grid-template-rows: 0 auto !important;
+            }
+            body.ccos-hide-header .course-player__content-header {
+                display: none !important;
+            }
+
+            /* Padding Removal Logic */
+            body.ccos-hide-padding .take #main-content {
+                padding: 0 !important;
+            }
+            /* Master Focus Mode - Triggers Header, Footer, and Padding at once */
+            body.ccos-focus-active .content-surface {
+                grid-template-rows: 0 auto !important;
+            }
+            body.ccos-focus-active .course-player__content-header {
+                display: none !important;
+            }
+            body.ccos-focus-active .content-modal {
+                grid-template-rows: 1fr !important;
+                grid-template-areas: "content-inner" !important;
+            }
+            body.ccos-focus-active #course-player-footer {
+                display: none !important;
+            }
+            body.ccos-focus-active #main-content {
+                padding: 0 !important;
+            }                
+        `;
+        document.head.appendChild(style);
+    }
+
+    hideCompleteButton() {
+        document.body.classList.add('ccos-hide-footer');
+        console.log('Footer hidden and grid collapsed');
     }
 
     showCompleteButton() {
-        const footer = document.getElementById('course-player-footer');
-        const gridContainer = footer.parentElement;
-
-        if (footer) {
-            footer.style.display = '';
-
-            if (gridContainer) {
-                // Revert to original layout (Values taken from your screenshot)
-                gridContainer.style.gridTemplateRows = 'auto minmax(64px, min-content)';
-                gridContainer.style.gridTemplateAreas = '"content-inner" "content-navigation"';
-            }
-
-            console.log('Footer shown and grid restored');
-        } else {
-            console.warn('Course player footer not found');
-        }
+        document.body.classList.remove('ccos-hide-footer');
+        console.log('Footer shown and grid restored');
     }
 
+    hideContentHeader() {
+        document.body.classList.add('ccos-hide-header');
+        console.log('Header hidden and grid collapsed');
+    }
+
+    showContentHeader() {
+        document.body.classList.remove('ccos-hide-header');
+        console.log('Header shown and grid restored');
+    }
+
+    // New Padding methods
+    removeMainPadding() {
+        document.body.classList.add('ccos-hide-padding');
+        console.log('Main padding removed');
+    }
+
+    restoreMainPadding() {
+        document.body.classList.remove('ccos-hide-padding');
+        console.log('Main padding restored');
+    }
+    enableFocusMode() {
+        document.body.classList.add('ccos-focus-active');
+        console.log('Focus Mode: Enabled (Header, Footer, and Padding hidden)');
+    }
+
+    disableFocusMode() {
+        document.body.classList.remove('ccos-focus-active');
+        console.log('Focus Mode: Disabled (UI restored)');
+    }
     clickCompleteButton() {
         const button = document.querySelector('#course-player-footer [data-qa="complete-continue__btn"]');
         if (button) {
