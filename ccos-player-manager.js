@@ -147,9 +147,19 @@ class CCOSCoursePlayerManager {
 
     hideCompleteButton() {
         const footer = document.getElementById('course-player-footer');
+        // Select the parent grid container using the class from your screenshot
+        const gridContainer = footer.parentElement;
+
         if (footer) {
             footer.style.display = 'none';
-            console.log('Complete and Continue button hidden');
+
+            if (gridContainer) {
+                // Remove the 64px reserved row and the second grid area
+                gridContainer.style.gridTemplateRows = '1fr';
+                gridContainer.style.gridTemplateAreas = '"content-inner"';
+            }
+
+            console.log('Footer hidden and grid collapsed');
         } else {
             console.warn('Course player footer not found');
         }
@@ -157,9 +167,18 @@ class CCOSCoursePlayerManager {
 
     showCompleteButton() {
         const footer = document.getElementById('course-player-footer');
+        const gridContainer = footer.parentElement;
+
         if (footer) {
             footer.style.display = '';
-            console.log('Complete and Continue button shown');
+
+            if (gridContainer) {
+                // Revert to original layout (Values taken from your screenshot)
+                gridContainer.style.gridTemplateRows = 'auto minmax(64px, min-content)';
+                gridContainer.style.gridTemplateAreas = '"content-inner" "content-navigation"';
+            }
+
+            console.log('Footer shown and grid restored');
         } else {
             console.warn('Course player footer not found');
         }
