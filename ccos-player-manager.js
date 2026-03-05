@@ -215,6 +215,13 @@ class CCOSCoursePlayerManager {
             }
 
             /* Single Lesson Mode - Focus Mode + Left Drawer hiding (Desktop Only) */
+            body.ccos-single-lesson-active .course-player__top-bar {
+                display: none !important;
+            }
+            body.ccos-single-lesson-active .course-player__container {
+                grid-template-rows: 100% !important;
+                grid-template-areas: "content" !important;
+            }
             @media (min-width: 992px) {
                 body.ccos-single-lesson-active .course-player__left-drawer {
                     display: none !important;
@@ -271,7 +278,7 @@ class CCOSCoursePlayerManager {
     singleLessonMode() {
         this.enableFocusMode();
         document.body.classList.add('ccos-single-lesson-active');
-        console.log('Single Lesson Mode: Enabled (Focus mode + left drawer hidden)');
+        console.log('Single Lesson Mode: Enabled (Focus mode + left drawer + top bar hidden)');
     }
     clickCompleteButton() {
         const button = document.querySelector('#course-player-footer [data-qa="complete-continue__btn"]');
