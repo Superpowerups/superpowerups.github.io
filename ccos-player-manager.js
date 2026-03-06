@@ -139,7 +139,11 @@ class CCOSCoursePlayerManager {
                     this.disableFocusMode();
                     break;
                 case 'ccos_cpm_single_lesson_mode':
-                    this.singleLessonMode();
+                case 'ccos_cpm_single_lesson_mode_enable':
+                    this.enableSingleLessonMode();
+                    break;
+                case 'ccos_cpm_single_lesson_mode_disable':
+                    this.disableSingleLessonMode();
                     break;
                 case 'ccos_cpm_click_cc':
                     this.clickCompleteButton();
@@ -271,14 +275,19 @@ class CCOSCoursePlayerManager {
 
     disableFocusMode() {
         document.body.classList.remove('ccos-focus-active');
-        document.body.classList.remove('ccos-single-lesson-active');
         console.log('Focus Mode: Disabled (UI restored)');
     }
 
-    singleLessonMode() {
+    enableSingleLessonMode() {
         this.enableFocusMode();
         document.body.classList.add('ccos-single-lesson-active');
         console.log('Single Lesson Mode: Enabled (Focus mode + left drawer + top bar hidden)');
+    }
+
+    disableSingleLessonMode() {
+        document.body.classList.remove('ccos-single-lesson-active');
+        this.disableFocusMode();
+        console.log('Single Lesson Mode: Disabled (UI restored)');
     }
     clickCompleteButton() {
         const button = document.querySelector('#course-player-footer [data-qa="complete-continue__btn"]');
@@ -2194,6 +2203,22 @@ window.LessonPageEvents = {
             window.parent.postMessage({
                 type: 'ccos_cpm_navigate_link',
                 data: options
+            }, '*');
+        }
+    },
+
+    enableSingleLessonMode() {
+        if (window.parent !== window) {
+            window.parent.postMessage({
+                type: 'ccos_cpm_single_lesson_mode_enable'
+            }, '*');
+        }
+    },
+
+    disableSingleLessonMode() {
+        if (window.parent !== window) {
+            window.parent.postMessage({
+                type: 'ccos_cpm_single_lesson_mode_disable'
             }, '*');
         }
     }
