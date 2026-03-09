@@ -44,10 +44,13 @@ class CCOSCoursePlayerManager {
     setupCoursePlayerHooks() {
         // Always show Complete and Continue button when content will change
         CoursePlayerV2.on('hooks:contentWillChange', (data) => {
-            console.log('Content will change:', data);
+            console.log('ccospm restore');
             this.clearLessonTimer();
             this.showCompleteButton();
+            this.disableSingleLessonMode();
+            this.disableFocusMode();
             this.showContentHeader();
+
         });
 
         // Handle content did change
