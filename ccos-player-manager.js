@@ -1309,9 +1309,9 @@ class CCOSCoursePlayerManager {
     }
 
     sendUserContext() {
-        const user = window.Thinkific?.currentUser;
+        const user = window.Thinkific?.current_user;
         if (!user) {
-            console.warn('CCOSPM: Thinkific.currentUser not available');
+            console.warn('CCOSPM: Thinkific.current_user not available');
             return;
         }
 
