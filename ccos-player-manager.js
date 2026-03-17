@@ -169,6 +169,9 @@ class CCOSCoursePlayerManager {
                 case 'ccos_cpm_navigate_link':
                     this.navigateLink(data);
                     break;
+                case 'ccos_cpm_request_user_context':
+                    this.sendUserContext();
+                    break;
                 default:
                     console.log('Unknown lesson page event:', type, data);
             }
@@ -1303,6 +1306,29 @@ class CCOSCoursePlayerManager {
             window.location.href = config.url;
         }
 
+    }
+
+    sendUserContext() {
+        const user = window.Thinkific?.currentUser;
+        if (!user) {
+            console.warn('CCOSPM: Thinkific.currentUser not available');
+            return;
+        }
+
+        const iframe = document.querySelector('iframe');
+        if (!iframe) {
+            console.warn('CCOSPM: No iframe found to send user context');
+            return;
+        }
+
+        iframe.contentWindow.postMessage({
+            type: 'ccos_cpm_user_context',
+            data: {
+                ...user,
+                uid: `${user.id}_${user.created_at}`
+            }
+        }, '*');
+        console.log('CCOSPM: User context sent to iframe');
     }
 
     showCTA(options = {}) {
