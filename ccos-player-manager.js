@@ -31,6 +31,7 @@ class CCOSCoursePlayerManager {
         $(document).ready(() => {
             if (typeof (CoursePlayerV2) !== 'undefined') {
                 this.injectFocusStyles();
+                this.applyInitialDisplayMode();
                 this.setupCoursePlayerHooks();
                 this.setupEventListeners();
                 this.isInitialized = true;
@@ -41,16 +42,37 @@ class CCOSCoursePlayerManager {
         });
     }
 
+    applyInitialDisplayMode() {
+        const cfg = window.CCOS_PLAYER_CONFIG || {};
+        const mode = cfg.initialMode;
+        if (!mode) return;
+
+        if (mode === 'single-lesson') {
+            this.enableSingleLessonMode();
+        } else if (mode === 'focus') {
+            this.enableFocusMode();
+        } else {
+            console.warn(`CCOS_PLAYER_CONFIG.initialMode "${mode}" not recognized`);
+            return;
+        }
+
+        // Drop the pre-paint guard class once the real mode class is on the body
+        document.documentElement.classList.remove('ccos-single-lesson-pending');
+        console.log(`Initial display mode applied: ${mode}`);
+    }
+
     setupCoursePlayerHooks() {
         // Always show Complete and Continue button when content will change
         CoursePlayerV2.on('hooks:contentWillChange', (data) => {
             console.log('ccospm restore');
             this.clearLessonTimer();
             this.showCompleteButton();
-            this.disableSingleLessonMode();
-            this.disableFocusMode();
-            this.showContentHeader();
 
+            const initialMode = (window.CCOS_PLAYER_CONFIG || {}).initialMode;
+            if (initialMode !== 'single-lesson') this.disableSingleLessonMode();
+            if (initialMode !== 'focus' && initialMode !== 'single-lesson') this.disableFocusMode();
+
+            this.showContentHeader();
         });
 
         // Handle content did change
@@ -305,13 +327,6 @@ class CCOSCoursePlayerManager {
             console.log('Complete and Continue button clicked');
         } else {
             console.warn('Complete and Continue button not found');
-        }
-        const button_continue = document.querySelector('#course-player-footer .btn--continue button');
-        if (button_continue) {
-            button_continue.click();
-            console.log('Continue button clicked');
-        } else {
-            console.warn('Continue button not found');
         }
     }
 
