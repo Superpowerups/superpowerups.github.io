@@ -51,6 +51,8 @@ class CCOSCoursePlayerManager {
             this.enableSingleLessonMode();
         } else if (mode === 'focus') {
             this.enableFocusMode();
+        } else if (mode === 'full-screen') {
+            this.enableFullScreenMode();
         } else {
             console.warn(`CCOS_PLAYER_CONFIG.initialMode "${mode}" not recognized`);
             return;
@@ -71,6 +73,7 @@ class CCOSCoursePlayerManager {
             const initialMode = (window.CCOS_PLAYER_CONFIG || {}).initialMode;
             if (initialMode !== 'single-lesson') this.disableSingleLessonMode();
             if (initialMode !== 'focus' && initialMode !== 'single-lesson') this.disableFocusMode();
+            if (initialMode !== 'full-screen') this.disableFullScreenMode();
 
             this.showContentHeader();
         });
@@ -159,6 +162,12 @@ class CCOSCoursePlayerManager {
                     break;
                 case 'ccos_cpm_focus_mode_enable':
                     this.enableFocusMode();
+                    break;
+                case 'ccos_cpm_full_screen_mode_disable':
+                    this.enableFullScreenMode();
+                    break;
+                case 'ccos_cpm_full_screen_mode_enable':
+                    this.disableFullScreenMode();
                     break;
                 case 'ccos_cpm_focus_mode_disable':
                     this.disableFocusMode();
@@ -319,6 +328,16 @@ class CCOSCoursePlayerManager {
         document.body.classList.remove('ccos-single-lesson-active');
         this.disableFocusMode();
         console.log('Single Lesson Mode: Disabled (UI restored)');
+    }
+
+    enableFullScreenMode() {
+        $(".course-player__content").addClass("course-player--fullscreen");
+        console.log('Full Screen Mode: Enabled');
+    }
+
+    disableFullScreenMode() {
+        $(".course-player__content").removeClass("course-player--fullscreen");
+        console.log('Full Screen Mode: Disabled');
     }
     clickCompleteButton() {
         const button = document.querySelector('#course-player-footer [data-qa="complete-continue__btn"]');
