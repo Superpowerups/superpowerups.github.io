@@ -169,6 +169,9 @@ class CCOSCoursePlayerManager {
                 case 'ccos_cpm_navigate_link':
                     this.navigateLink(data);
                     break;
+                case 'ccos_cpm_navigate_to_lesson':
+                    this.navigateToLesson(data);
+                    break;
                 case 'ccos_cpm_request_user_context':
                     this.sendUserContext();
                     break;
@@ -302,6 +305,13 @@ class CCOSCoursePlayerManager {
             console.log('Complete and Continue button clicked');
         } else {
             console.warn('Complete and Continue button not found');
+        }
+        const button_continue = document.querySelector('#course-player-footer .btn--continue button');
+        if (button_continue) {
+            button_continue.click();
+            console.log('Continue button clicked');
+        } else {
+            console.warn('Continue button not found');
         }
     }
 
@@ -1306,6 +1316,45 @@ class CCOSCoursePlayerManager {
             window.location.href = config.url;
         }
 
+    }
+
+    navigateToLesson(options = {}) {
+        const search = (options.lessonName || '').toLowerCase().trim();
+        if (!search) {
+            console.warn('CCOSPM: navigateToLesson called with no lessonName');
+            return;
+        }
+
+        const items = document.querySelectorAll('.course-player__content-item');
+        let match = null;
+
+        items.forEach(item => {
+            if (match) return;
+            const link = item.querySelector('a.course-player__content-item__link');
+            if (!link) return;
+
+            // Get title text without the nested details div (type, duration, etc.)
+            const titleEl = link.querySelector('.content-item__title');
+            if (!titleEl) return;
+            const detailsEl = titleEl.querySelector('.content-item__details');
+            let titleText = titleEl.textContent;
+            if (detailsEl) titleText = titleText.replace(detailsEl.textContent, '');
+            titleText = titleText.toLowerCase().trim();
+
+            // Also match against the slug in the href (strip numeric ID prefix, replace dashes with spaces)
+            const href = link.getAttribute('href') || '';
+            const slugPart = href.split('/').pop().replace(/^\d+-/, '').replace(/-/g, ' ');
+
+            if (titleText.includes(search) || search.includes(titleText) || slugPart.includes(search)) {
+                match = link;
+            }
+        });
+
+        if (match) {
+            match.click();
+        } else {
+            console.warn('CCOSPM: No lesson found matching:', options.lessonName);
+        }
     }
 
     sendUserContext() {
