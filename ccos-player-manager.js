@@ -347,6 +347,13 @@ class CCOSCoursePlayerManager {
         } else {
             console.warn('Complete and Continue button not found');
         }
+        const button_continue = document.querySelector('#course-player-footer .btn--continue button');
+        if (button_continue) {
+            button_continue.click();
+            console.log('Continue button clicked');
+        } else {
+            console.warn('Continue button not found');
+        }
     }
 
     showToast(options = {}) {
